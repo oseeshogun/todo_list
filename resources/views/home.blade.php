@@ -15,7 +15,10 @@
 
 <body class="antialiased">
     <h1>Home</h1>
-    <button>Logout</button>
+    <form action="{{ route('logout') }}" method="post">
+        @csrf
+        <button type="submit">Logout</button>
+    </form>
 </body>
 
 </html>
