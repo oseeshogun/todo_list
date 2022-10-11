@@ -26,4 +26,6 @@ Route::post('/register', [RegisterController::class, 'create']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
+Route::get('/tasks', [TaskController::class, 'getAll']);
+
 Route::get('/', [TaskController::class, 'index'])->name('home');

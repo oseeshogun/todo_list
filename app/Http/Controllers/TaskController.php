@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -11,7 +12,14 @@ class TaskController extends Controller
         $this->middleware(['auth']);
     }
 
-    public function index() {
+    public function index()
+    {
         return view('home');
+    }
+
+    public function getAll(Request $request)
+    {
+        $tasks = $request->user()->tasks();
+        return response()->json($tasks);
     }
 }

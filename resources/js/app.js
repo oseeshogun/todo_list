@@ -7,7 +7,7 @@
 require("./bootstrap");
 
 window.Vue = require("vue").default;
-const store = require("./store");
+const store = require("./store").default;
 
 /**
  * The following block of code may be used to automatically register your

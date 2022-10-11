@@ -14,8 +14,21 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
-    name: 'create-task',
-    mounted() { }
-}
+    methods: {
+        ...mapActions("todos", [
+            'fetchTodos'
+        ])
+    },
+    computed: {
+        ...mapGetters("todos", [
+            'allTodos',
+        ])
+    },
+    mounted() {
+        this.fetchTodos();
+    }
+};
 </script>
