@@ -20,7 +20,8 @@ class TaskController extends Controller
 
     public function getAll(Request $request)
     {
-        $tasks = $request->user()->tasks();
+        $user_id = auth()->user()->id;
+        $tasks = Task::where('user_id', '=', $user_id)->get();
         return response()->json($tasks);
     }
 

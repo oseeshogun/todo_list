@@ -34,6 +34,8 @@ export default {
         submitTodo(e) {
             e.preventDefault();
             this.addTask(this.text);
+            e.target.reset();
+            this.text = '';
         }
     },
     computed: {

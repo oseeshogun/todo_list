@@ -6,16 +6,11 @@ const axiosClient = axios.create({
 });
 
 const state = () => ({
-    tasks: [
-        {
-            id: 1,
-            text: "Hard code TODO",
-        },
-    ],
+    tasks: [],
 });
 
 const getters = {
-    allTasks: (state) => state.tasks,
+    allTasks: (state) => state.tasks.reverse(),
 };
 
 const actions = {

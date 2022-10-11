@@ -24,6 +24,10 @@ Vue.component(
     "create-task",
     require("./components/CreateTaskComponent.vue").default
 );
+Vue.component(
+    "list-tasks",
+    require("./components/ListTaskComponent.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

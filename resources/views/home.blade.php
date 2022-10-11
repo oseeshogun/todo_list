@@ -31,6 +31,7 @@
     <div id="app">
         <div class="">
             <create-task></create-task>
+            <list-tasks></list-tasks>
         </div>
     </div>
 
