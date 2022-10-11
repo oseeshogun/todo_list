@@ -14,12 +14,11 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
-<body class="antialiased">
+<body class="bg-slate-100">
     <header>
         <nav class="bg-blue-500 text-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                 <a href="https://flowbite.com" class="flex items-center">
-                    <i class="far fa-user"></i>
                     <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">TODO App</span>
                 </a>
                 <form method="POST" action="{{ route('logout') }}" class="flex items-center lg:order-2">
@@ -30,6 +29,9 @@
         </nav>
     </header>
     <div id="app">
+        <div class="">
+            <create-task></create-task>
+        </div>
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>

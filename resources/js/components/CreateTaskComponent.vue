@@ -1,15 +1,13 @@
 <template>
-    <div class="flex items-center justify-center w-screen h-screen bg-gray-800">
-        <form method="GET">
-            <div class="relative text-gray-600 focus-within:text-gray-400">
+    <div class="flex items-center justify-center mt-10">
+        <form method="POST" class="w-full px-[5%] lg:px-[20%]">
+            <div class="relative w-full text-gray-600 focus-within:text-gray-400">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-                    <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
-                        
-                    </button>
+                    <i class="fa-solid fa-plus"></i>
                 </span>
-                <input type="search" name="q"
-                    class="py-2 text-sm text-white bg-gray-900 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900"
-                    placeholder="Search..." autocomplete="off">
+                <input type="text" name="q"
+                    class="py-2 px-4 text-sm w-full text-black bg-white-900 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-black-900"
+                    placeholder="Ajouter une tâche" autocomplete="off">
             </div>
         </form>
     </div>
@@ -17,9 +15,7 @@
 
 <script>
 export default {
-    props: {
-        logout_url: String,
-        csrf: String
-    }
+    name: 'create-task',
+    mounted() { }
 }
 </script>
