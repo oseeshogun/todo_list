@@ -24,9 +24,16 @@ class TaskController extends Controller
         return response()->json($tasks);
     }
 
-    // public function create(Request $request) {
-    //     $this->validate($request, [
-    //         'text' => 'required'
-    //     ])
-    // }
+    public function create(Request $request)
+    {
+        $this->validate($request, [
+            'text' => 'required'
+        ]);
+
+        $task = $request->user()->tasks()->create([
+            'text' => $request->text
+        ]);
+
+        return response()->json($task);
+    }
 }

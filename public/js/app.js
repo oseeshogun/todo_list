@@ -5319,11 +5319,19 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)("todos", ['fetchTodos'])),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)("todos", ['allTodos'])),
-  mounted: function mounted() {
-    this.fetchTodos();
-  }
+  data: function data() {
+    return {
+      text: ''
+    };
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)("tasks", ['addTask'])), {}, {
+    submitTodo: function submitTodo(e) {
+      e.preventDefault();
+      this.addTask(this.text);
+    }
+  }),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)("tasks", [])),
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -5343,33 +5351,61 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm._m(0);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
   return _c("div", {
     staticClass: "flex items-center justify-center mt-10"
   }, [_c("form", {
-    staticClass: "w-full px-[5%] lg:px-[20%]",
+    staticClass: "w-full mx-[5%] lg:mx-[20%] p-2 bg-white rounded-xl",
     attrs: {
       method: "POST"
+    },
+    on: {
+      submit: _vm.submitTodo
     }
   }, [_c("div", {
-    staticClass: "relative w-full text-gray-600 focus-within:text-gray-400"
-  }, [_c("span", {
-    staticClass: "absolute inset-y-0 left-0 flex items-center pl-2"
-  }, [_c("i", {
-    staticClass: "fa-solid fa-plus"
-  })]), _vm._v(" "), _c("input", {
+    staticClass: "relative border-sky-200 rounded-2xl w-full text-gray-600 focus-within:text-gray-400",
+    "class": {
+      "border-b-2": _vm.text
+    }
+  }, [_vm._m(0), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.text,
+      expression: "text"
+    }],
     staticClass: "py-2 px-4 text-sm w-full text-black bg-white-900 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-black-900",
     attrs: {
       type: "text",
       name: "q",
       placeholder: "Ajouter une tâche",
       autocomplete: "off"
+    },
+    domProps: {
+      value: _vm.text
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.text = $event.target.value;
+      }
     }
-  })])])]);
+  })]), _vm._v(" "), _vm.text ? _c("div", {
+    staticClass: "w-full py-2 flex justify-end"
+  }, [_c("button", {
+    staticClass: "border cursor-pointer text-white border-sky-200 px-5 py-2 rounded-2xl bg-sky-500 hover:bg-sky-700",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("Ajouter")])]) : _vm._e()])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("span", {
+    staticClass: "absolute inset-y-0 left-0 flex items-center pl-2"
+  }, [_c("i", {
+    staticClass: "fa-solid fa-plus"
+  })]);
 }];
 render._withStripped = true;
 
@@ -5470,23 +5506,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _modules_todos__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/todos */ "./resources/js/store/modules/todos.js");
+/* harmony import */ var _modules_tasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/tasks */ "./resources/js/store/modules/tasks.js");
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   modules: {
-    todos: _modules_todos__WEBPACK_IMPORTED_MODULE_0__["default"]
+    tasks: _modules_tasks__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 
 /***/ }),
 
-/***/ "./resources/js/store/modules/todos.js":
+/***/ "./resources/js/store/modules/tasks.js":
 /*!*********************************************!*\
-  !*** ./resources/js/store/modules/todos.js ***!
+  !*** ./resources/js/store/modules/tasks.js ***!
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -5508,19 +5544,19 @@ var axiosClient = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
 });
 var state = function state() {
   return {
-    todos: [{
+    tasks: [{
       id: 1,
       text: "Hard code TODO"
     }]
   };
 };
 var getters = {
-  allTodos: function allTodos(state) {
-    return state.todos;
+  allTasks: function allTasks(state) {
+    return state.tasks;
   }
 };
 var actions = {
-  fetchTodos: function fetchTodos(_ref) {
+  fetchTasks: function fetchTasks(_ref) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       var commit, response;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -5532,7 +5568,7 @@ var actions = {
               return axiosClient.get("/tasks/");
             case 3:
               response = _context.sent;
-              console.log(response.data);
+              commit("setTasks", response.data);
             case 5:
             case "end":
               return _context.stop();
@@ -5540,9 +5576,39 @@ var actions = {
         }
       }, _callee);
     }))();
+  },
+  addTask: function addTask(_ref2, text) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var commit, response;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axiosClient.post("/tasks/", {
+                text: text
+              });
+            case 3:
+              response = _context2.sent;
+              commit("newTask", response.data);
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
   }
 };
-var mutations = {};
+var mutations = {
+  setTasks: function setTasks(state, tasks) {
+    return state.tasks = tasks;
+  },
+  newTask: function newTask(state, task) {
+    return state.tasks.push(task);
+  }
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
   state: state,

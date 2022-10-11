@@ -6,7 +6,7 @@ const axiosClient = axios.create({
 });
 
 const state = () => ({
-    todos: [
+    tasks: [
         {
             id: 1,
             text: "Hard code TODO",
@@ -15,17 +15,24 @@ const state = () => ({
 });
 
 const getters = {
-    allTodos: (state) => state.todos,
+    allTasks: (state) => state.tasks,
 };
 
 const actions = {
-    async fetchTodos({ commit }) {
+    async fetchTasks({ commit }) {
         const response = await axiosClient.get("/tasks/");
-        console.log(response.data);
+        commit("setTasks", response.data);
+    },
+    async addTask({ commit }, text) {
+        const response = await axiosClient.post("/tasks/", { text });
+        commit("newTask", response.data);
     },
 };
 
-const mutations = {};
+const mutations = {
+    setTasks: (state, tasks) => (state.tasks = tasks),
+    newTask: (state, task) => state.tasks.push(task),
+};
 
 export default {
     namespaced: true,
