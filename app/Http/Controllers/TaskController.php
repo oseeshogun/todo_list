@@ -9,7 +9,8 @@ class TaskController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth.api'])->except('index');
+        $this->middleware(['auth'])->only('index');
     }
 
     public function index()
@@ -22,4 +23,10 @@ class TaskController extends Controller
         $tasks = $request->user()->tasks();
         return response()->json($tasks);
     }
+
+    // public function create(Request $request) {
+    //     $this->validate($request, [
+    //         'text' => 'required'
+    //     ])
+    // }
 }
