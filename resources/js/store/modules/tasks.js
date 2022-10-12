@@ -2,11 +2,12 @@ import axios from "axios";
 
 const axiosClient = axios.create({
     withCredentials: true,
-    baseURL: window.location.origin,
+    baseURL: window.location.origin + '/api',
 });
 
 const state = () => ({
     tasks: [],
+    token: ''
 });
 
 const getters = {
@@ -37,6 +38,11 @@ const actions = {
     async markAsFinished({ commit }, task) {
         await axiosClient.put(`/tasks/${task.id}/finished`, { finished: task.finished });
         commit("updateTask", task);
+    },
+    async getAccessToken({ commit }) {
+        const response = await axios.get("/token/");
+        console.log(response.data);
+        // commit("newTask", response.data);
     }
 };
 

@@ -5787,11 +5787,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var axiosClient = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
   withCredentials: true,
-  baseURL: window.location.origin
+  baseURL: window.location.origin + '/api'
 });
 var state = function state() {
   return {
-    tasks: []
+    tasks: [],
+    token: ''
   };
 };
 var getters = {
@@ -5916,6 +5917,28 @@ var actions = {
           }
         }
       }, _callee5);
+    }))();
+  },
+  getAccessToken: function getAccessToken(_ref6) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+      var commit, response;
+      return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              commit = _ref6.commit;
+              _context6.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/token/");
+            case 3:
+              response = _context6.sent;
+              console.log(response.data);
+              // commit("newTask", response.data);
+            case 5:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
     }))();
   }
 };
