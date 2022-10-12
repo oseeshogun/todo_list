@@ -1,27 +1,22 @@
 <template>
     <div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
-        <div class="rounded bg-white shadow p-6 m-4 w-full mx-[5%] lg:mx-[20%]">
-            <div>
-                <div class="flex mb-4 items-center" v-for="task in allTasks" :key="task.id">
-                    <input id="default-checkbox" type="checkbox" value=""
-                        class="w-4 h-4 mr-4 cursor-pointer text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                    <p :class="{ 'line-through': task.finished, 'text-gray-400': task.finished }"
-                        class="w-full text-green">{{ task.text }}</p>
-                    <button class="text-red-500">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </div>
+        <div class="rounded bg-white shadow m-4 w-full mx-[5%] lg:mx-[20%]">
+            <div class="hover:bg-gray-100 cursor-pointer px-6 py-1" v-for="task in allTasks.slice().reverse()" :key="task.id">
+                <TaskItem :task="task"></TaskItem>
             </div>
         </div>
+
     </div>
+
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import TaskItem from './TaskItemComponent.vue';
 
 export default {
-    data() {
-        return {}
+    components: {
+        TaskItem
     },
     methods: {
         ...mapActions("tasks", [

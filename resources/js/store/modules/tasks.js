@@ -10,7 +10,7 @@ const state = () => ({
 });
 
 const getters = {
-    allTasks: (state) => state.tasks.reverse(),
+    allTasks: (state) => state.tasks,
 };
 
 const actions = {
@@ -22,11 +22,28 @@ const actions = {
         const response = await axiosClient.post("/tasks/", { text });
         commit("newTask", response.data);
     },
+    async updateTask({ commit }, task) {
+        console.log("Logg");
+        await axiosClient.put(`/tasks/${task.id}`, {
+            text: task.text,
+        });
+        commit("updateTask", task);
+    },
 };
 
 const mutations = {
     setTasks: (state, tasks) => (state.tasks = tasks),
     newTask: (state, task) => state.tasks.push(task),
+    updateTask: (state, updatedTask) => {
+        const index = state.tasks.findIndex(
+            (task) => task.id === updatedTask.id
+        );
+        if (index !== -1) {
+            let copyTasks = [...state.tasks];
+            copyTasks[index] = updatedTask;
+            state.tasks = copyTasks;
+        }
+    },
 };
 
 export default {
