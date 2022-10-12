@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,20 +16,17 @@ class RegisterController extends Controller
         $this->middleware(['guest']);
     }
 
-    public function index() {
+    public function index()
+    {
         return view('auth.register');
     }
 
-    public function create(Request $request) {
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'required|confirmed',
-        ]);
+    public function create(RegisterUserRequest $request)
+    {
 
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name' => $request->safe()->name,
+            'email' => $request->safe()->email,
             'password' => Hash::make($request->password),
         ]);
 

@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\ApiTokenController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +28,6 @@ Route::post('/register', [RegisterController::class, 'create']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::post('/token', [ApiTokenController::class, 'get_token'])->name('get_token');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
