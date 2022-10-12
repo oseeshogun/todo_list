@@ -44,9 +44,18 @@ class TaskController extends Controller
             'text' => 'required'
         ]);
 
-        $task = Task::where('id', $id)->update([
+        $user_id = auth()->user()->id;
+        $task = Task::where('id', $id)->where('user_id', $user_id)->update([
             'text' => $request->text
         ]);
+
+        return response()->json($task);
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $user_id = auth()->user()->id;
+        $task = Task::where('id', $id)->where('user_id', $user_id)->delete();
 
         return response()->json($task);
     }

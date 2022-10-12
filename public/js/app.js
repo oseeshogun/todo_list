@@ -5394,9 +5394,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       text: this.task.text
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)("tasks", ['updateTask'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)("tasks", ['updateTask', 'deleteTask'])), {}, {
     onTextClicked: function onTextClicked(e) {
       this.editing = true;
+    },
+    onDeleteTask: function onDeleteTask() {
+      this.deleteTask(this.task.id);
     },
     submitTask: function submitTask(e) {
       e.preventDefault();
@@ -5598,7 +5601,14 @@ var render = function render() {
         return _vm.onTextClicked.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n            " + _vm._s(_vm.task.text))]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _vm.editing ? _c("div", {
+  }, [_vm._v("\n            " + _vm._s(_vm.task.text))]), _vm._v(" "), _c("button", {
+    staticClass: "text-red-500",
+    on: {
+      click: _vm.onDeleteTask
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-trash"
+  })])]), _vm._v(" "), _vm.editing ? _c("div", {
     staticClass: "w-full py-2 flex justify-start"
   }, [_c("button", {
     staticClass: "border cursor-pointer text-black border-gray-200 px-5 py-2 text-xs hover:bg-sky-100",
@@ -5607,15 +5617,7 @@ var render = function render() {
     }
   }, [_vm._v("Annuler")])]) : _vm._e()]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("button", {
-    staticClass: "text-red-500"
-  }, [_c("i", {
-    staticClass: "fa fa-trash"
-  })]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -5821,19 +5823,38 @@ var actions = {
           switch (_context3.prev = _context3.next) {
             case 0:
               commit = _ref3.commit;
-              console.log("Logg");
-              _context3.next = 4;
+              _context3.next = 3;
               return axiosClient.put("/tasks/".concat(task.id), {
                 text: task.text
               });
-            case 4:
+            case 3:
               commit("updateTask", task);
-            case 5:
+            case 4:
             case "end":
               return _context3.stop();
           }
         }
       }, _callee3);
+    }))();
+  },
+  deleteTask: function deleteTask(_ref4, id) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+      var commit;
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
+              return axiosClient["delete"]("/tasks/".concat(id));
+            case 3:
+              commit("deleteTask", id);
+            case 4:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
     }))();
   }
 };
@@ -5843,6 +5864,11 @@ var mutations = {
   },
   newTask: function newTask(state, task) {
     return state.tasks.push(task);
+  },
+  deleteTask: function deleteTask(state, id) {
+    return state.tasks = state.tasks.filter(function (task) {
+      return task.id !== id;
+    });
   },
   updateTask: function updateTask(state, updatedTask) {
     var index = state.tasks.findIndex(function (task) {

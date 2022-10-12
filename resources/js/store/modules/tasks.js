@@ -23,17 +23,22 @@ const actions = {
         commit("newTask", response.data);
     },
     async updateTask({ commit }, task) {
-        console.log("Logg");
         await axiosClient.put(`/tasks/${task.id}`, {
             text: task.text,
         });
         commit("updateTask", task);
+    },
+    async deleteTask({ commit }, id) {
+        await axiosClient.delete(`/tasks/${id}`);
+        commit("deleteTask", id);
     },
 };
 
 const mutations = {
     setTasks: (state, tasks) => (state.tasks = tasks),
     newTask: (state, task) => state.tasks.push(task),
+    deleteTask: (state, id) =>
+        (state.tasks = state.tasks.filter((task) => task.id !== id)),
     updateTask: (state, updatedTask) => {
         const index = state.tasks.findIndex(
             (task) => task.id === updatedTask.id

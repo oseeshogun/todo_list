@@ -9,7 +9,7 @@
                 :class="{ 'line-through': task.finished, 'text-gray-400': task.finished }" class="w-full text-green">
                 {{
                 task.text }}</p>
-            <button class="text-red-500">
+            <button @click="onDeleteTask" class="text-red-500">
                 <i class="fa fa-trash"></i>
             </button>
         </div>
@@ -35,10 +35,14 @@ export default {
     },
     methods: {
         ...mapActions("tasks", [
-            'updateTask'
+            'updateTask',
+            'deleteTask'
         ]),
         onTextClicked(e) {
             this.editing = true;
+        },
+        onDeleteTask() {
+            this.deleteTask(this.task.id);
         },
         submitTask(e) {
             e.preventDefault();
