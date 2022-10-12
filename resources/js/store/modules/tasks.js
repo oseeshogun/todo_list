@@ -32,6 +32,10 @@ const actions = {
         await axiosClient.delete(`/tasks/${id}`);
         commit("deleteTask", id);
     },
+    async markAsFinished({ commit }, task) {
+        await axiosClient.put(`/tasks/${task.id}/finished`, { finished: task.finished });
+        commit("updateTask", task);
+    }
 };
 
 const mutations = {

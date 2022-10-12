@@ -27,6 +27,7 @@ Route::post('/register', [RegisterController::class, 'create']);
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::put('/tasks/{id}', [TaskController::class, 'update']);
+Route::put('/tasks/{id}/finished', [TaskController::class, 'make_as_finished']);
 Route::delete('/tasks/{id}', [TaskController::class, 'delete']);
 Route::get('/tasks', [TaskController::class, 'getAll']);
 Route::post('/tasks', [TaskController::class, 'create']);

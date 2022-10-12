@@ -59,4 +59,18 @@ class TaskController extends Controller
 
         return response()->json($task);
     }
+
+    public function make_as_finished(Request $request, $id)
+    {
+        $this->validate($request, [
+            'finished' => 'required|boolean'
+        ]);
+
+        $user_id = auth()->user()->id;
+        $task = Task::where('id', $id)->where('user_id', $user_id)->update([
+            'finished' => $request->finished
+        ]);
+
+        return response()->json($task);
+    }
 }

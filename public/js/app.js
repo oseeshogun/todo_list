@@ -5394,12 +5394,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       text: this.task.text
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)("tasks", ['updateTask', 'deleteTask'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)("tasks", ['updateTask', 'deleteTask', 'markAsFinished'])), {}, {
     onTextClicked: function onTextClicked(e) {
       this.editing = true;
     },
     onDeleteTask: function onDeleteTask() {
       this.deleteTask(this.task.id);
+    },
+    onMarkAsFinished: function onMarkAsFinished(e) {
+      this.markAsFinished(_objectSpread(_objectSpread({}, this.task), {}, {
+        finished: e.target.checked
+      }));
     },
     submitTask: function submitTask(e) {
       e.preventDefault();
@@ -5562,8 +5567,10 @@ var render = function render() {
     staticClass: "w-4 h-4 mr-4 cursor-pointer text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600",
     attrs: {
       id: "default-checkbox",
-      type: "checkbox",
-      value: ""
+      type: "checkbox"
+    },
+    on: {
+      change: _vm.onMarkAsFinished
     }
   }), _vm._v(" "), _vm.editing ? _c("input", {
     directives: [{
@@ -5855,6 +5862,28 @@ var actions = {
           }
         }
       }, _callee4);
+    }))();
+  },
+  markAsFinished: function markAsFinished(_ref5, task) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+      var commit;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
+              return axiosClient.put("/tasks/".concat(task.id, "/finished"), {
+                finished: task.finished
+              });
+            case 3:
+              commit("updateTask", task);
+            case 4:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
     }))();
   }
 };
