@@ -21,7 +21,7 @@ class TaskController extends Controller
         return response()->json($tasks);
     }
 
-    public function create(CreateTaskRequest $request)
+    public function store(CreateTaskRequest $request)
     {
 
         $task = $request->user()->tasks()->create([
@@ -41,7 +41,7 @@ class TaskController extends Controller
         return response()->json($task);
     }
 
-    public function delete(Request $request, $id)
+    public function destroy(Request $request, $id)
     {
         $user_id = auth()->user()->id;
         $task = Task::where('id', $id)->where('user_id', $user_id)->delete();
@@ -49,7 +49,7 @@ class TaskController extends Controller
         return response()->json($task);
     }
 
-    public function make_as_finished(MarkTaskFinishedRequest $request, $id)
+    public function mark_as_finished(MarkTaskFinishedRequest $request, $id)
     {
         $user_id = auth()->user()->id;
         $task = Task::where('id', $id)->where('user_id', $user_id)->update([
