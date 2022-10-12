@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class LoginUserRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class LoginUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::guest();
     }
 
     /**
@@ -42,5 +43,4 @@ class LoginUserRequest extends FormRequest
             'email.email' => "Email invalide",
         ];
     }
-
 }
