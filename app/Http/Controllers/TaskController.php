@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\MarkTaskFinishedRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -19,28 +21,21 @@ class TaskController extends Controller
         return response()->json($tasks);
     }
 
-    public function create(Request $request)
+    public function create(CreateTaskRequest $request)
     {
-        $this->validate($request, [
-            'text' => 'required'
-        ]);
 
         $task = $request->user()->tasks()->create([
-            'text' => $request->text
+            'text' => $request->safe()->text
         ]);
 
         return response()->json($task);
     }
 
-    public function update(Request $request, $id)
+    public function update(CreateTaskRequest $request, $id)
     {
-        $this->validate($request, [
-            'text' => 'required'
-        ]);
-
         $user_id = auth()->user()->id;
         $task = Task::where('id', $id)->where('user_id', $user_id)->update([
-            'text' => $request->text
+            'text' => $request->safe()->text
         ]);
 
         return response()->json($task);
@@ -54,12 +49,8 @@ class TaskController extends Controller
         return response()->json($task);
     }
 
-    public function make_as_finished(Request $request, $id)
+    public function make_as_finished(MarkTaskFinishedRequest $request, $id)
     {
-        $this->validate($request, [
-            'finished' => 'required|boolean'
-        ]);
-
         $user_id = auth()->user()->id;
         $task = Task::where('id', $id)->where('user_id', $user_id)->update([
             'finished' => $request->finished
