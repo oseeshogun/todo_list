@@ -1,7 +1,7 @@
 <template>
     <form @submit="submitTask" @reset="() => onCancel()" method="POST" action="" class="inline w-full mx-4 my-0">
         <div class="flex items-center my-0">
-            <input id="default-checkbox" @change="onMarkAsFinished" type="checkbox"
+            <input id="default-checkbox" @change="onMarkAsFinished" :checked="task.finished" type="checkbox"
                 class="w-4 h-4 mr-4 cursor-pointer text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
             <input v-model="text" type="text" @blur="() => onCancel()" autofocus
                 class="w-full mr-3 p-1 border-sky-500 outline-sky-500" v-if="editing" />
@@ -9,9 +9,9 @@
                 :class="{ 'line-through': task.finished, 'text-gray-400': task.finished }" class="w-full text-green">
                 {{
                 task.text }}</p>
-            <button @click="onDeleteTask" class="text-red-500">
+            <span @click="onDeleteTask" class="text-red-500">
                 <i class="fa fa-trash"></i>
-            </button>
+            </span>
         </div>
         <div class="w-full py-2 flex justify-start" v-if="editing">
             <button type="reset"

@@ -5361,7 +5361,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     TaskItem: _TaskItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)("tasks", ['fetchTasks'])),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)("tasks", ["allTasks"])),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)("tasks", ["allTasks", "finishedTaks", "notFinishedTaks"])),
   mounted: function mounted() {
     this.fetchTasks();
   }
@@ -5513,11 +5513,11 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
+  return _c("div", [_c("div", {
     staticClass: "h-100 w-full flex items-center justify-center bg-teal-lightest font-sans"
   }, [_c("div", {
     staticClass: "rounded bg-white shadow m-4 w-full mx-[5%] lg:mx-[20%]"
-  }, _vm._l(_vm.allTasks.slice().reverse(), function (task) {
+  }, _vm._l(_vm.notFinishedTaks.slice().reverse(), function (task) {
     return _c("div", {
       key: task.id,
       staticClass: "hover:bg-gray-100 cursor-pointer px-6 py-1"
@@ -5526,7 +5526,26 @@ var render = function render() {
         task: task
       }
     })], 1);
-  }), 0)]);
+  }), 0)]), _vm._v(" "), _vm.finishedTaks.length > 0 ? _c("div", {
+    staticClass: "mt-20"
+  }, [_c("div", {
+    staticClass: "mx-[5%] lg:mx-[20%]"
+  }, [_c("h2", {
+    staticClass: "mb-5 text-lg font-bold"
+  }, [_vm._v(_vm._s(_vm.finishedTaks.length) + " éléments terminés")])]), _vm._v(" "), _c("div", {
+    staticClass: "h-100 w-full flex items-center justify-center bg-teal-lightest font-sans"
+  }, [_c("div", {
+    staticClass: "rounded bg-white shadow m-4 w-full mx-[5%] lg:mx-[20%]"
+  }, _vm._l(_vm.finishedTaks.slice().reverse(), function (task) {
+    return _c("div", {
+      key: task.id,
+      staticClass: "hover:bg-gray-100 cursor-pointer px-6 py-1"
+    }, [_c("TaskItem", {
+      attrs: {
+        task: task
+      }
+    })], 1);
+  }), 0)])]) : _vm._e()]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -5569,6 +5588,9 @@ var render = function render() {
       id: "default-checkbox",
       type: "checkbox"
     },
+    domProps: {
+      checked: _vm.task.finished
+    },
     on: {
       change: _vm.onMarkAsFinished
     }
@@ -5608,7 +5630,7 @@ var render = function render() {
         return _vm.onTextClicked.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n            " + _vm._s(_vm.task.text))]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n            " + _vm._s(_vm.task.text))]), _vm._v(" "), _c("span", {
     staticClass: "text-red-500",
     on: {
       click: _vm.onDeleteTask
@@ -5775,6 +5797,16 @@ var state = function state() {
 var getters = {
   allTasks: function allTasks(state) {
     return state.tasks;
+  },
+  finishedTaks: function finishedTaks(state) {
+    return state.tasks.filter(function (task) {
+      return task.finished;
+    });
+  },
+  notFinishedTaks: function notFinishedTaks(state) {
+    return state.tasks.filter(function (task) {
+      return !task.finished;
+    });
   }
 };
 var actions = {

@@ -558,6 +558,12 @@ video {
 .mr-3 {
   margin-right: 0.75rem;
 }
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+.mt-20 {
+  margin-top: 5rem;
+}
 .block {
   display: block;
 }
@@ -864,6 +870,10 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 .font-semibold {
   font-weight: 600;

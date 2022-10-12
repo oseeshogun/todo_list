@@ -11,6 +11,8 @@ const state = () => ({
 
 const getters = {
     allTasks: (state) => state.tasks,
+    finishedTaks: (state) => state.tasks.filter(task => task.finished),
+    notFinishedTaks: (state) => state.tasks.filter(task => !task.finished),
 };
 
 const actions = {
