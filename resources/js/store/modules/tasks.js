@@ -7,7 +7,6 @@ const axiosClient = axios.create({
 
 const state = () => ({
     tasks: [],
-    token: ''
 });
 
 const getters = {
@@ -39,11 +38,6 @@ const actions = {
         await axiosClient.put(`/tasks/${task.id}/finished`, { finished: task.finished });
         commit("updateTask", task);
     },
-    async getAccessToken({ commit }) {
-        const response = await axios.get("/token/");
-        console.log(response.data);
-        // commit("newTask", response.data);
-    }
 };
 
 const mutations = {
