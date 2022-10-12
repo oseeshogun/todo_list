@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +33,4 @@ Route::delete('/tasks/{id}', [TaskController::class, 'delete']);
 Route::get('/tasks', [TaskController::class, 'getAll']);
 Route::post('/tasks', [TaskController::class, 'create']);
 
-Route::get('/', [TaskController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');

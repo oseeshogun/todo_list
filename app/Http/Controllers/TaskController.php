@@ -10,12 +10,6 @@ class TaskController extends Controller
     public function __construct()
     {
         $this->middleware(['auth.api'])->except('index');
-        $this->middleware(['auth'])->only('index');
-    }
-
-    public function index()
-    {
-        return view('home');
     }
 
     public function getAll(Request $request)
