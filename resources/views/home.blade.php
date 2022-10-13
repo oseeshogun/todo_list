@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.main')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@section('title')
+<title>Laravel</title>
+@endsection
 
-    <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-</head>
-
-<body class="antialiased">
-    <h1>Home</h1>
-    <form action="{{ route('logout') }}" method="post">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
-</body>
-
-</html>
+@section('content')
+@include('components.header')
+<div id="app">
+    <div class="">
+        <create-task></create-task>
+        <list-tasks></list-tasks>
+    </div>
+</div>
+@endsection
