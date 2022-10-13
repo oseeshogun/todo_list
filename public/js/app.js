@@ -5739,7 +5739,7 @@ var render = function render() {
     staticClass: "fixed top-0 left-0 w-screen h-screen bg-black/20 z-40"
   }, [_c("ConfirmDelete", {
     attrs: {
-      onCancelEdition: function onCancelEdition() {
+      onCancel: function onCancel() {
         return _vm.showModal = false;
       },
       onConfirmDelete: function onConfirmDelete() {

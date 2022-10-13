@@ -23,7 +23,7 @@
             </div>
         </form>
         <div class="fixed top-0 left-0 w-screen h-screen bg-black/20 z-40" v-if="showModal">
-            <ConfirmDelete :onCancelEdition="() => (showModal = false)" :onConfirmDelete="() => deleteTask(task.id)">
+            <ConfirmDelete :onCancel="() => (showModal = false)" :onConfirmDelete="() => deleteTask(task.id)">
             </ConfirmDelete>
         </div>
     </div>
