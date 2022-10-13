@@ -1,9 +1,4 @@
-import axios from "axios";
-
-const axiosClient = axios.create({
-    withCredentials: true,
-    baseURL: window.location.origin + '/api',
-});
+import axiosClient from '../../utils/axios_client'
 
 const state = () => ({
     tasks: [],
@@ -11,8 +6,8 @@ const state = () => ({
 
 const getters = {
     allTasks: (state) => state.tasks,
-    finishedTaks: (state) => state.tasks.filter(task => task.finished),
-    notFinishedTaks: (state) => state.tasks.filter(task => !task.finished),
+    finishedTaks: (state) => state.tasks.filter((task) => task.finished),
+    notFinishedTaks: (state) => state.tasks.filter((task) => !task.finished),
 };
 
 const actions = {
@@ -34,8 +29,10 @@ const actions = {
         await axiosClient.delete(`/tasks/${id}`);
         commit("deleteTask", id);
     },
-    async markAsFinished({ commit }, task) {
-        await axiosClient.put(`/tasks/${task.id}/finished`, { finished: task.finished });
+    async toggleFinished({ commit }, task) {
+        await axiosClient.put(`/tasks/${task.id}/finished`, {
+            finished: task.finished,
+        });
         commit("updateTask", task);
     },
 };
@@ -50,9 +47,7 @@ const mutations = {
             (task) => task.id === updatedTask.id
         );
         if (index !== -1) {
-            let copyTasks = [...state.tasks];
-            copyTasks[index] = updatedTask;
-            state.tasks = copyTasks;
+            state.tasks.splice(index, 1, updatedTask);
         }
     },
 };

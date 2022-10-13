@@ -28,6 +28,4 @@ Route::post('/register', [RegisterController::class, 'create']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-Route::post('/token', [ApiTokenController::class, 'get_token'])->name('get_token');
-
 Route::get('/', [HomeController::class, 'index'])->name('home');

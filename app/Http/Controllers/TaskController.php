@@ -16,8 +16,8 @@ class TaskController extends Controller
 
     public function getAll(Request $request)
     {
-        $user_id = auth()->user()->id;
-        $tasks = Task::where('user_id', '=', $user_id)->get();
+        $userId = auth()->user()->id;
+        $tasks = Task::where('user_id', $userId)->get();
         return response()->json($tasks);
     }
 
@@ -33,26 +33,39 @@ class TaskController extends Controller
 
     public function update(CreateTaskRequest $request, $id)
     {
-        $user_id = auth()->user()->id;
-        $task = Task::where('id', $id)->where('user_id', $user_id)->update([
+        $userId = auth()->user()->id;
+        $task = Task::find($id);
+     
+        if ($task->user_id !== $userId) {
+            return response()->json(["message" => "Vous n'avez pas le droit de modifier cette tâche"], 403);
+        }
+
+        $updatedTask = Task::where('id', $id)->update([
             'text' => $request->safe()->text
         ]);
-
-        return response()->json($task);
+     
+        return response()->json($updatedTask);
     }
 
     public function destroy(Request $request, $id)
     {
-        $user_id = auth()->user()->id;
-        $task = Task::where('id', $id)->where('user_id', $user_id)->delete();
+        $userId = auth()->user()->id;
+
+        $task = Task::find($id);
+     
+        if ($task->user_id !== $userId) {
+            return response()->json(["message" => "Vous n'avez pas le droit de supprimer cette tâche"], 403);
+        }
+        
+        $task = Task::where('id', $id)->delete();
 
         return response()->json($task);
     }
 
-    public function mark_as_finished(MarkTaskFinishedRequest $request, $id)
+    public function toggleFinished(MarkTaskFinishedRequest $request, $id)
     {
-        $user_id = auth()->user()->id;
-        $task = Task::where('id', $id)->where('user_id', $user_id)->update([
+        $userId = auth()->user()->id;
+        $task = Task::where('id', $id)->where('user_id', $userId)->update([
             'finished' => $request->finished
         ]);
 

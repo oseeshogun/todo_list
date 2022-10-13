@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::put('/tasks/{id}', [TaskController::class, 'update']);
-Route::put('/tasks/{id}/finished', [TaskController::class, 'mark_as_finished']);
+Route::put('/tasks/{id}/finished', [TaskController::class, 'toggleFinished']);
 Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
 Route::get('/tasks', [TaskController::class, 'getAll']);
 Route::post('/tasks', [TaskController::class, 'store']);

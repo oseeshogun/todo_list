@@ -1,53 +1,59 @@
 <template>
     <div>
-
-        <div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
+        <div
+            class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans"
+        >
             <div class="rounded bg-white shadow m-4 w-full mx-[5%] lg:mx-[20%]">
-                <div class="hover:bg-gray-100 cursor-pointer px-6 py-1" v-for="task in notFinishedTaks.slice().reverse()"
-                    :key="task.id">
+                <div
+                    v-for="task in notFinishedTaks.slice().reverse()"
+                    :key="task.id"
+                    class="hover:bg-gray-100 cursor-pointer px-6 py-1"
+                >
                     <TaskItem :task="task"></TaskItem>
                 </div>
             </div>
         </div>
-        <div class="mt-20" v-if="finishedTaks.length > 0">
+        <div v-if="finishedTaks.length > 0" class="mt-20">
             <div class="mx-[5%] lg:mx-[20%]">
-                <h2 class="mb-5 text-lg font-bold">{{ finishedTaks.length }} éléments terminés</h2>
+                <h2 class="mb-5 text-lg font-bold">
+                    {{ finishedTaks.length }} éléments terminés
+                </h2>
             </div>
-            <div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
-                <div class="rounded bg-white shadow m-4 w-full mx-[5%] lg:mx-[20%]">
-                    <div class="hover:bg-gray-100 cursor-pointer px-6 py-1" v-for="task in finishedTaks.slice().reverse()"
-                        :key="task.id">
+            <div
+                class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans"
+            >
+                <div
+                    class="rounded bg-white shadow m-4 w-full mx-[5%] lg:mx-[20%]"
+                >
+                    <div
+                        v-for="task in finishedTaks.slice().reverse()"
+                        :key="task.id"
+                        class="hover:bg-gray-100 cursor-pointer px-6 py-1"
+                    >
                         <TaskItem :task="task"></TaskItem>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import TaskItem from './TaskItemComponent.vue';
+import { mapGetters, mapActions } from "vuex";
+import TaskItem from "./TaskItemComponent.vue";
 
 export default {
     components: {
-        TaskItem
+        TaskItem,
     },
     methods: {
-        ...mapActions("tasks", [
-            'fetchTasks'
-        ]),
+        ...mapActions("tasks", ["fetchTasks"]),
     },
     computed: {
-        ...mapGetters("tasks", [
-            "allTasks",
-            "finishedTaks",
-            "notFinishedTaks"
-        ])
+        ...mapGetters("tasks", ["allTasks", "finishedTaks", "notFinishedTaks"]),
     },
     mounted() {
         this.fetchTasks();
-    }
+    },
 };
 </script>
